@@ -1,0 +1,75 @@
+---
+title: "Practico 1"
+author: "Martin, Grgich. José Mamani"
+date: "May 18, 2018"
+output: beamer_presentation
+ 
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+``` 
+
+***
+
+Vuelos que arribaron con un retraso de mas de dos horas
+
+```{r}
+library(nycflights13)
+vuelos<-nycflights13::flights
+vuelos
+```
+
+Antes que nada, debo explorar el dataset. Ver los formatos de los datos, su distribucion, etc 
+
+
+```{r}
+summary(vuelos)
+```
+
+1# Retrasos mayores a 2 horas
+
+```{r}
+demorasMayores2Horas <- subset(vuelos,vuelos$dep_delay>2)
+demorasMayores2Horas
+summary(demorasMayores2Horas$dep_delay)
+```
+ 
+2# Vuelos que volaron a Houston
+
+```{r}
+vuelosHouston <- subset(vuelos,vuelos$dest=="IAH" | vuelos$dest=="HOU")
+summary(vuelosHouston$dest)
+```
+
+3# Vuelos operados por United, American o Delta
+Con el comando airlines obtengo los nombres de las aerolineas, para poder armar el filtro
+airlines
+
+```{r}
+vuelosOperadosPorUnitedAmericanDelta <- subset(vuelos,vuelos$carrier=="AA" | vuelos$carrier=="DL" | vuelos$carrier=="UA")
+```
+
+
+#4# Vuelos que Salieron en Verano (Julio, Agosto y Septiembre)#
+```{r}
+vuelosVerano <- subset(flights,  subset= flights$month >= 7 & flights$month <= 9) 
+summary(vuelosVerano$month)
+```
+
+#5# Arrivaron mas de dos horas tarde, pero salieron bien.
+```{r}
+vuelosTarde <- subset(flights,  subset= flights$arr_delay >= 120 & flights$dep_delay <= 0) 
+summary(vuelosTarde)
+```
+
+#6#	Salieron entre medianoche y las 6 am.
+```{r}
+vuelosNocturnos <- subset(flights,  subset= flights$dep_time <= 600) 
+summary(vuelosNocturnos)
+```
+
+***
+
+
